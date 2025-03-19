@@ -5,11 +5,11 @@ import Link from "next/link";
 const prisma = new PrismaClient();
 
 export default async function RedirectPage({
-  params,
+  params: paramsPromise,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await Promise.resolve(params);
+  const { slug } = await paramsPromise;
 
   const urlEntry = await prisma.url.findUnique({
     where: { slug },
